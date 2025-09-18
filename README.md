@@ -3,8 +3,8 @@
 Сделать это можно несколькими способами, в статье описан один из них
 
 <p align="center">
-  <a href="photo/Meshtastic-diagram.png">
-    <img src="photo/Meshtastic-diagram.png" width="700" />
+  <a href="photo/Meshtastic-diagram1.png">
+    <img src="photo/Meshtastic-diagram1.png" width="700" />
   </a>
 </p>
 
