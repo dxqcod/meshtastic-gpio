@@ -42,6 +42,9 @@
   <a href="photo/demo2.gif">
     <img src="photo/demo2.gif" width="300" />
   </a>
+  <a href="photo/demo1.gif">
+    <img src="photo/demo1.gif" width="300" />
+  </a>
 </p>
 
 ## ⚖️ Лицензия
