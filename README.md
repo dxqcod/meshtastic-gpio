@@ -40,7 +40,7 @@
 
 <p align="center">
   <a href="photo/demo2.gif">
-    <img src="photo/demo2.gif" width="700" />
+    <img src="photo/demo2.gif" width="300" />
   </a>
 </p>
 
