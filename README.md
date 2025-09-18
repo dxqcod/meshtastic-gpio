@@ -38,6 +38,11 @@
 └── .gitignore        # Исключения для Git (логи, секреты, временные файлы)
 ```
 
+<p align="center">
+  <a href="photo/demo2">
+    <img src="photo/demo2" width="700" />
+  </a>
+</p>
 
 ## ⚖️ Лицензия
 Проект распространяется под лицензией [MIT](LICENSE).
