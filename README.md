@@ -185,7 +185,7 @@ meshtastic --set external_notification.enabled true \
   --set external_notification.active true \
   --set external_notification.output_ms 1000
 ```
-В этом примере светодиод также загорается на 1 секунду, а потом гаснет.
+В этом примере светодиод также загорается на 1 секунду от каждого сообщения в канале №1, а потом гаснет.
 
 3️⃣ Следующим шагом может быть то, что светодиод загорается по сообщению On, а ганет по сообщени Off.
 Для этого необходимо заменить кусок кода все в том же файле ExternalNotificationModule.cpp, 
