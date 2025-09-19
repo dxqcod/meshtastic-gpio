@@ -13,9 +13,14 @@
 
 ## Пример работы
  На изображении устройство по сообщению "on" включает светодиод, по "off" выключает
+
+
 <p align="center">
-  <a href="photo/demo2.gif">
-    <img src="photo/demo2.gif" width="200" />
+  <a href="photo/demo2.jpg">
+    <img src="photo/demo2.jpg" width="200" />
+  </a>
+  <a href="photo/demo3.jpg">
+    <img src="photo/demo3.jpg" width="200" />
   </a>
 </p>
 
