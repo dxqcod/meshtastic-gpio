@@ -150,7 +150,7 @@ meshtastic --set external_notification.enabled true \  # включает мод
 то ищем файл ExternalNotificationModule.cpp,  
 который находится в каталоге /home/mrbeast/firmware/src/modules/  
 В нем ищем строку if (!isFromUs(&mp))  
-и заменяем ее на if (!isFromUs(&mp) && mp.channel == 1)  
+и заменяем ее на if (!isFromUs(&mp) && mp.channel == 1),  
 где единичка это номер нашего канала который мы впоследствии создадим (именно номера, а не названия канала, его можно посмотреть в приложении).  
 <p align="center">
   <a href="photo/chenal2.jpg">
