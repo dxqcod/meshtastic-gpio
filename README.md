@@ -30,9 +30,8 @@
 ├── docs/             # Документация и вспомогательные материалы
 │ └── photos/         # Скриншоты, примеры фото/кадров
 │
-├── scripts/          # Основные рабочие скрипты
-│ ├── timelaps.sh     # Съёмка кадров, watermark, запись маркеров
-│ ├── color_detect.sh # Детекция полярного сияния по цветам
+├── src/          # Основные  скрипты
+│ ├── ExternalNotificationModule.cpp     # Готовый модуль для работы с GPIO
 │
 ├── LICENSE           # Лицензия проекта (например, MIT)
 └── .gitignore        # Исключения для Git (логи, секреты, временные файлы)
@@ -118,7 +117,7 @@ esptool.py --chip esp32s3 --port /dev/ttyACM0 erase_flash
 ```bash
 cd /home/mrbeast/firmware/
 ```
-
+####  Включение модуля RemoteHardware
 Теперь нам нужна возможность управлять пинами платы (GPIO) дистанционно, 
 а соответственно включать/выключать светодиоды, реле и тд.
 Для этого нужно включить модуль RemoteHardware в сборку.
@@ -127,90 +126,108 @@ cd /home/mrbeast/firmware/
 Удаление строки включает модуль RemoteHardware
 
 Собираем прошивку
+```bash
 platformio run -e tlora-t3s3-v1
-Прошиваем 
+```
+Прошиваем плату
+```bash
 platformio run -e tlora-t3s3-v1 -t upload --upload-port /dev/ttyACM0
-
+```
 
 
 Включаем модуль RemoteHardware для управления GPIO и внешними устройствами:
+```bash
 meshtastic --set remote_hardware.enabled true
+```
 
+#### Это было общее, а далее несколько модулей конфигурации с нарастающим функционалом.
 
-Это было общее, а далее несколько модулей конфигурации с нарастающим функционалом.
-
-1.Эта конфигурация зажигает подключенный светодиод от каждого сообщения в любом канале.
-
+1️⃣ Эта конфигурация зажигает подключенный светодиод от каждого сообщения в любом канале.
+```bash
 meshtastic --set external_notification.enabled true \  # включает модуль
   --set external_notification.alert_message true \     # реагировать на входящие сообщения
   --set external_notification.output 42 \              # назначает GPIO42 для светодиода
   --set external_notification.active true \            # лог. "1" включает светодиод
   --set external_notification.output_ms 1000           # длительность сигнала — 1 секунда
-
+```
 
       
-2.Далее, если хотим чтоб реагировал не на все сообщения, а на определенный канал, 
+2️⃣ Далее, если хотим чтоб реагировал не на все сообщения, а на определенный канал, 
 то ищем файл ExternalNotificationModule.cpp, который находится в каталоге /home/mrbeast/firmware/src/modules/
 В нем строку if (!isFromUs(&mp)) { и заменяем ее на if (!isFromUs(&mp) && mp.channel == 1) {
 где единичка это номер нашего канала который мы впоследствии создадим (именно номера, а не названия канала, его можно посмотреть в приложении), 
 можно заморочиться и вставить уникальный идендификато канала, так как первым по порядку может оказаться другой канал.
 Далее опять пересобираем платформио:
+```bash
 platformio run -e tlora-t3s3-v1
+```
 
 Перепрошиваем устройство:
+```bash
 platformio run -e tlora-t3s3-v1 -t upload --upload-port /dev/ttyACM0
-
+```
 Создаем отдельный канал, который называем например GPIO, в нем будем пересылать сообщения для управления внешними устройствами:
+```bash
 meshtastic --ch-add gpio
+```
 Канал можно создавать и в приложении,поэтому шаг не обязательный
 Впоследствии при синхронизации устройств этот канал появится и на другом устройстве, я это делал через qr код в приложении. 
 Обращаем внимание чтобы номер канала был 1, это можно посмотреть в приложении.
 Сопрягаем устройства
 и применяем блок команд с предыдущего раздела.
+```bash
 meshtastic --set external_notification.enabled true \
   --set external_notification.alert_message true \
   --set external_notification.output 42 \
   --set external_notification.active true \
   --set external_notification.output_ms 1000
+```
 В этом примере светодиод также загорается на 1 секунду, а потом гаснет.
 
-3.Следующим шагом может быть то, что светодиод загорается по сообщению On, а ганет по сообщени Off.
+3️⃣ Следующим шагом может быть то, что светодиод загорается по сообщению On, а ганет по сообщени Off.
 Для этого необходимо заменить кусок кода все в том же файле ExternalNotificationModule.cpp, 
 который находится в каталоге /home/mrbeast/firmware/src/modules/
-auto &p = mp.decoded;
-std::string msgText(reinterpret_cast<const char*>(p.payload.bytes), p.payload.size);
-
-if (msgText == "On") {
+```bash
+        if (!isFromUs(&mp) && mp.channel == 1) {
+ 
+    // Check if the message contains a bell character. Don't do this loop for every pin, just once.
+    auto &p = mp.decoded;
+    std::string msgText(reinterpret_cast<const char*>(p.payload.bytes), p.payload.size);
+    if (msgText == "On") {
     LOG_INFO("Received 'On' message — turning LED ON (constant)");
-    isNagging = false;  // отключаем мигание
+    isNagging = false;  // <-- отключаем режим мигания
     setExternalState(0, true);
-    nagCycleCutoff = UINT32_MAX;
+    nagCycleCutoff = UINT32_MAX; // просто на всякий
     return ProcessMessage::CONTINUE;
-
 } else if (msgText == "Off") {
     LOG_INFO("Received 'Off' message — turning LED OFF");
     isNagging = false;
     setExternalState(0, false);
     nagCycleCutoff = 1;
     return ProcessMessage::CONTINUE;
-
 } else {
     // Любое другое сообщение — игнорировать
     LOG_INFO("Message ignored: %s", msgText.c_str());
     return ProcessMessage::CONTINUE;
 }
+```
 
 Далее действия повторяются с предущих конфигурациях, опять пересобираем платформио
+```bash
 platformio run -e tlora-t3s3-v1
+```
 Перепрошиваем устройство
+```bash
 platformio run -e tlora-t3s3-v1 -t upload --upload-port /dev/ttyACM0
+```
 Заново создаем канал gpio например, смотрим в приложении, чтобы его номер был 1, сопрягаем устройства
 Применяем блок команд, такой же как и в предыдущих примерах, кроме зажигания на 1 секунду, так как он переключается теперь по команде:
+```bash
 meshtastic --set external_notification.enabled true \
   --set external_notification.alert_message true \
   --set external_notification.output 42 \
   --set external_notification.active true
-
+```
 
 
 
