@@ -16,13 +16,17 @@
 
 
 <p align="center">
-  <a href="photo/demo2.gif">
-    <img src="photo/demo2.gif" width="200" />
+  <a href="photo/demo3.gif">
+    <img src="photo/demo3.gif" width="200" />
   </a>
   &nbsp;&nbsp;&nbsp;
   <a href="photo/demo3.gif">
     <img src="photo/demo3.gif" width="280" />
   </a>
+  &nbsp;&nbsp;&nbsp;
+   <a href="photo/demo2.gif">
+    <img src="photo/demo2.gif" width="280" />
+  </a> 
 </p>
 
 
