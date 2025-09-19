@@ -108,8 +108,9 @@ meshtastic --port /dev/ttyACM0 --info
 ```
 
 Далее производим стирание памяти, указывая порт, полученный на предыдущем шаге
+```bash
 esptool.py --chip esp32s3 --port /dev/ttyACM0 erase_flash
-
+```
 ####  Включение модуля RemoteHardware
 Нам нужна возможность управлять пинами платы (GPIO) дистанционно, 
 тоесть нужно включить модуль RemoteHardware в сборку, а дляэтого
