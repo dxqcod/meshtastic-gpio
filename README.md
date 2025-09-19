@@ -39,7 +39,7 @@
  На изображении устройство лежит поверх телефона и по сообщению "on" включается светодиод, по "off" выключается
 <p align="center">
   <a href="photo/demo2.gif">
-    <img src="photo/demo2.gif" width="300" />
+    <img src="photo/demo2.gif" width="200" />
   </a>
 </p>
 
