@@ -151,11 +151,11 @@ meshtastic --set external_notification.enabled true \  # включает мод
 В нем строку if (!isFromUs(&mp)) { и заменяем ее на if (!isFromUs(&mp) && mp.channel == 1) {
 где единичка это номер нашего канала который мы впоследствии создадим (именно номера, а не названия канала, его можно посмотреть в приложении).  
 <p align="center">
-  <a href="photo/chenal1.jpg">
-    <img src="photo/chenal1.jpg" width="200" />
-  </a>
   <a href="photo/chenal2.jpg">
     <img src="photo/chenal2.jpg" width="200" />
+  </a>
+  <a href="photo/chenal1.jpg">
+    <img src="photo/chenal1.jpg" width="200" />
   </a>
 </p>
 
