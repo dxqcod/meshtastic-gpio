@@ -20,7 +20,7 @@
     <img src="photo/demo2.gif" width="200" />
   </a>
   <a href="photo/demo3.gif">
-    <img src="photo/demo3.gif" width="300" />
+    <img src="photo/demo3.gif" width="280" />
   </a>
 </p>
 
