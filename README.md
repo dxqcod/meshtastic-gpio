@@ -17,7 +17,7 @@
 
 <p align="center">
   <a href="photo/demo2.gif">
-    <img src="photo/demo2.gif" width="200" />
+    <img src="photo/demo2.gif" width="200" style="margin-right:20px;" />
   </a>
   <a href="photo/demo3.gif">
     <img src="photo/demo3.gif" width="280" />
