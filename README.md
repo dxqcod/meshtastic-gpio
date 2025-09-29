@@ -250,7 +250,7 @@ meshtastic --set external_notification.enabled true \
   --set external_notification.active true
 ```
 
-### Полностью конфигурационный файл можно посмотреть/скачать здесь.
+### Полный вид конфигурационного файла можно посмотреть/скачать здесь.
 [ExternalNotificationModule.cpp](src/ExternalNotificationModule.cpp)
 
 .
